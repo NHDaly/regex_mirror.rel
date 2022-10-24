@@ -1,0 +1,22 @@
+// install
+
+def reference[d](d2) =
+    regex_match_all["(\\w+)(\\[|\\()", d.text](_, m)
+    from m, r
+    where r != d.name
+    and r = substring[m, 1, num_chars[m]-1]
+    and d2.name = r
+
+
+module all_connections
+    def edge = d.name, d.reference from d
+end
+
+def display_all_connections = graphviz[all_connections]
+
+def connections = :edge, {
+    d.name, d.reference.name from d
+    where not starts_with(d.file, "rel")
+    and   not starts_with(d.reference.file, "rel")
+}
+def display_connections = graphviz[connections]

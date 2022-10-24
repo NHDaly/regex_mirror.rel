@@ -1,0 +1,71 @@
+// install
+
+//def def_regex = "\\s\\bdef\\b\\s+(?<name>\\w+)((.|\n)*)\\bdef"
+
+// def docstring1 = "(doc\"\"\"(.|\\n)+?(?=\"\"\")\"\"\")"
+// def docstring2 = "(doc\".+?\")"
+// def docstring = "(%docstring1|%docstring2)"
+
+def attribute = "(?:@\\S+\\s)"
+
+// def def_regex = "%docstring?\\bdef\\b"
+//def def_regex = "%docstring?\\s\\bdef\\b\\s+(?<name>\\w+)"
+def def_regex = "(^|\\s)%attribute?\\bdef\\b\\s+(?<name>\\w+)"
+//def def_name_regex = "%docstring?\\s\\bdef\\b\\s+(?<name>\\w+)"
+
+def def_location(m, line) = regex_match_all[def_regex,
+                rel:catalog:model[m]](line, _)
+
+doc"""
+    ^Definition[filename, start_offset]
+"""
+entity type Definition = String, Int
+
+doc"hi"
+def x = 2
+
+def location[d](f, o) = ^Definition[f, o](d) and def_location(f, o)
+def Definition = first[location]
+def file[d](f) = location[d](f,_)
+def offset[d](c) = location[d](_,c)
+
+def name[d](n) =
+    capture_group_by_name[
+        def_regex,
+        rel:catalog:model[d.file],
+        d.offset
+    ]["name"](n)
+
+def text[d in Definition] =
+    substring[
+        rel:catalog:model[d.file],
+        d.offset,
+        d.end_offset
+    ]
+
+def end_offset[d in Definition] =
+    _docs_ending_offset[d] <++ d._end_offset1
+
+def _docs_ending_offset[d in Definition](o) =
+    regex_match_all["\\bdoc\"", _text1[d]](o, _)
+
+def _end_offset1[d in Definition](o) =
+    sort[def_location](i, d.file, d.offset)
+    and sort[def_location](i+1, _, o)
+    from i in Int, i2 in Int
+
+def _text1[d in Definition] =
+    substring[
+        rel:catalog:model[d.file],
+        d.offset,
+        d._end_offset1
+    ]
+
+def out = table[{
+    :name,name;
+    :offset,offset;
+    :end_offset,end_offset;
+    :text,text;
+    //:body,body;
+}]
+
