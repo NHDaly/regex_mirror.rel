@@ -7,6 +7,8 @@ The reflection done here is very poor, since it is based on quick regexes that
 I put together in a couple hours, but it shows a proof of concept for
 user-space code reflection, by reflecting over the catalog's model relation.
 
+If the data came from the compiler itself, this package would be trivial.
+
 ## Examples:
 
 ```rel
@@ -27,4 +29,6 @@ def ab = :edge, {
 def output = graphviz[ab]
 ```
 
+For example, here is the output from running `graphviz[connections]` on this package itself, which is definitely not fully correct yet, not least because this is regex-based instead of based on the actual data from the compiler, but also because of some bugs in the logic I think:
+![graphviz (23)](https://user-images.githubusercontent.com/1582097/197904544-d6d61e7a-7316-41d7-8853-a6e23d3b28f2.png)
 
