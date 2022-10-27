@@ -29,6 +29,11 @@ def ab = :edge, {
 def output = graphviz[ab]
 ```
 
-For example, here is the output from running `graphviz[connections]` on this package itself, which is definitely not fully correct yet, not least because this is regex-based instead of based on the actual data from the compiler, but also because of some bugs in the logic I think:
-![graphviz (23)](https://user-images.githubusercontent.com/1582097/197904544-d6d61e7a-7316-41d7-8853-a6e23d3b28f2.png)
+For example, here is the output from running `graphviz[connections]` on this package itself:
+```rel
+graphviz[connections]
+```
+![graphviz (21)](https://user-images.githubusercontent.com/1582097/198413424-36553430-3286-4ac3-8163-a4198ddb2f48.svg)
+
+
 
