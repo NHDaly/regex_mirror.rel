@@ -21,9 +21,6 @@ doc"""
 """
 entity type Definition = String, Int
 
-doc"hi"
-def x = 2
-
 def location[d](f, o) = ^Definition[f, o](d) and def_location(f, o)
 def Definition = first[location]
 def file[d](f) = location[d](f,_)
@@ -60,12 +57,3 @@ def _text1[d in Definition] =
         d.offset,
         d._end_offset1
     ]
-
-def out = table[{
-    :name,name;
-    :offset,offset;
-    :end_offset,end_offset;
-    :text,text;
-    //:body,body;
-}]
-
