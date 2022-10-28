@@ -33,7 +33,7 @@ For example, here is the output from running `graphviz[connections]` on this pac
 ```rel
 graphviz[connections]
 ```
-![graphviz.svg](https://user-images.githubusercontent.com/1582097/198413424-36553430-3286-4ac3-8163-a4198ddb2f48.svg)
+![graphviz.svg](https://user-images.githubusercontent.com/1582097/198486357-45c14167-6380-49fd-88c9-08a4df6c0b04.svg)
 
 
 And in this (slightly more complex) example, we restrict the graph to just the edges reachable from `end_offset`:
