@@ -33,15 +33,15 @@ For example, here is the output from running `graphviz[connections]` on this pac
 ```rel
 graphviz[connections]
 ```
-![graphviz.svg](https://user-images.githubusercontent.com/1582097/198486357-45c14167-6380-49fd-88c9-08a4df6c0b04.svg)
+![graphviz.svg](https://user-images.githubusercontent.com/1582097/198490818-8d295124-c4d5-49f5-8f88-e13d1c64eaa2.svg)
 
 
 And in this (slightly more complex) example, we restrict the graph to just the edges reachable from `end_offset`:
 ```rel
-def end_offset_node = d in Definition : d.name = "end_offset"
+def start = d in Definition : d.name = "end_offset"
 def from_end_offset = union[
-    end_offset_node,
-    reachable[non_stdlib_ref][end_offset_node]
+    start,
+    reachable[non_stdlib_ref][start]
 ]
 
 def edge1 = {
