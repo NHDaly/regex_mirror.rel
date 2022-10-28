@@ -8,6 +8,12 @@ def reference[d in Definition](d2 in Definition) =
     from r
     where  d2.name = r
 
+@inline
+def non_stdlib_ref(a,b) {
+    reference(a,b)
+    and not starts_with(a.file, "rel/")
+    and not starts_with(b.file, "rel/")
+}
 
 // module all_connections
 //     def edge = d.name, d.reference.name from d
@@ -17,8 +23,6 @@ def reference[d in Definition](d2 in Definition) =
 
 def connections = :edge, {
     d.name, d2.name
-    from d, d2 in d.reference
-    where not starts_with(d.file, "rel")
-    and   not starts_with(d2.file, "rel")
+    from d, d2 in d.non_stdlib_ref
 }
 def display_connections = graphviz[connections]

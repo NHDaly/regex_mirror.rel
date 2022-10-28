@@ -4,14 +4,14 @@
 
 // def docstring1 = "(doc\"\"\"(.|\\n)+?(?=\"\"\")\"\"\")"
 // def docstring2 = "(doc\".+?\")"
-// def docstring = "(%docstring1|%docstring2)"
+// def docstring_regex = "(%docstring1|%docstring2)"
 
 def attribute = "(?:@\\S+\\s)"
 
-// def def_regex = "%docstring?\\bdef\\b"
-//def def_regex = "%docstring?\\s\\bdef\\b\\s+(?<name>\\w+)"
+// def def_regex = "%docstring_regex?\\bdef\\b"
+//def def_regex = "%docstring_regex?\\s\\bdef\\b\\s+(?<name>\\w+)"
 def def_regex = "(^|\\s)%attribute?\\bdef\\b\\s+(?<name>\\w+)"
-//def def_name_regex = "%docstring?\\s\\bdef\\b\\s+(?<name>\\w+)"
+//def def_name_regex = "%docstring_regex?\\s\\bdef\\b\\s+(?<name>\\w+)"
 
 def def_location(m, line) = regex_match_all[def_regex,
                 rel:catalog:model[m]](line, _)
